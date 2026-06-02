@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -6,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>学术个人主页</title>
     <link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-100-M/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://s2.ssl.qhres2.com/static/56662140ef7d5d03.css">
     <style>
         :root {
-            --primary-dark: #333333;
+            --primary-dark: #2c3e50;
             --primary-light: #f8f9fa;
             --accent-yellow: #ffc107;
             --accent-green: #28a745;
@@ -18,352 +16,386 @@
             --text-primary: #212529;
             --text-secondary: #6c757d;
         }
+        * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             background-color: var(--primary-light);
             color: var(--text-primary);
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s ease;
             opacity: 0;
         }
-        body.loaded {
-            opacity: 1;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
+        body.loaded { opacity: 1; }
+
+        /* ===== NAVBAR ===== */
         .navbar {
             background-color: var(--primary-dark);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
-        .navbar-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-logo {
-            color: white;
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        .nav-item {
-            position: relative;
-            margin-left: 1.5rem;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .navbar-container { display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { color: white; font-weight: bold; font-size: 1.4rem; letter-spacing: 1px; }
+        .nav-menu { display: flex; list-style: none; margin: 0; padding: 0; }
+        .nav-item { position: relative; margin-left: 0.5rem; }
         .nav-link {
-            color: white;
+            color: rgba(255,255,255,0.9);
             text-decoration: none;
             padding: 0.5rem 1rem;
             border-radius: 4px;
             transition: background-color 0.3s;
+            font-size: 0.95rem;
         }
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
+        .nav-link:hover { background-color: rgba(255,255,255,0.15); }
         .dropdown-menu {
             position: absolute;
-            top: 100%;
+            top: calc(100% + 8px);
             left: 0;
             background-color: white;
-            min-width: 200px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
-            padding: 0.5rem 0;
+            min-width: 220px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 6px;
+            padding: 0.4rem 0;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s;
+            transition: all 0.25s;
             z-index: 1001;
         }
-        .nav-item:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-        }
+        .nav-item:hover .dropdown-menu { opacity: 1; visibility: visible; }
         .dropdown-item {
             display: block;
-            padding: 0.5rem 1rem;
+            padding: 0.55rem 1.2rem;
             color: var(--text-primary);
             text-decoration: none;
-            transition: background-color 0.3s;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
         }
-        .dropdown-item:hover {
-            background-color: var(--primary-light);
-        }
-        .main-visual {
-            height: 400px;
-            background-color: #e9ecef;
+        .dropdown-item:hover { background-color: #f0f4f8; color: var(--accent-blue); }
+
+        /* ===== HERO BANNER ===== */
+        .hero {
+            width: 100%;
+            height: 420px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #2c4a6e 40%, #3a6186 70%, #89a4c7 100%);
             display: flex;
-            justify-content: center;
             align-items: center;
-            margin-bottom: 2rem;
-            border-radius: 8px;
+            justify-content: center;
+            position: relative;
             overflow: hidden;
+            margin-bottom: 2rem;
         }
-        .main-visual-placeholder {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 40% at 20% 60%, rgba(255,255,255,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 60% at 80% 30%, rgba(135,206,235,0.1) 0%, transparent 60%);
         }
+        /* 山峦剪影 SVG 背景 */
+        .hero-mountains {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            width: 100%; height: 70%;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+        }
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            letter-spacing: 2px;
+        }
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.8);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+        }
+        .hero-upload-hint {
+            margin-top: 1.2rem;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            border: 1px dashed rgba(255,255,255,0.3);
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+        }
+
+        /* ===== CARDS ===== */
         .card {
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            padding: 1.8rem 2rem;
             margin-bottom: 2rem;
         }
         .card-title {
-            font-size: 1.5rem;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--accent-blue);
+            font-size: 1.4rem;
+            margin: 0 0 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 3px solid var(--accent-blue);
             color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .paper-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+        .card-title i { color: var(--accent-blue); font-size: 1.1rem; }
+
+        /* ===== PAPER LIST ===== */
+        .paper-list { list-style: none; padding: 0; margin: 0; }
         .paper-item {
-            padding: 1rem 0;
-            border-bottom: 1px solid #eee;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
         }
-        .paper-item:last-child {
-            border-bottom: none;
-        }
-        .paper-title {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-        .paper-meta {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        .footer {
-            background-color: var(--primary-dark);
+        .paper-item:last-child { border-bottom: none; }
+        .paper-index {
+            background-color: var(--accent-blue);
             color: white;
-            padding: 2rem 0;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .paper-body { flex: 1; }
+        .paper-title {
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #1a1a2e;
+        }
+        .paper-meta { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6; }
+        .paper-meta span { margin-right: 1rem; }
+        .paper-meta .journal { color: var(--accent-blue); font-weight: 500; }
+        .paper-badge {
+            display: inline-block;
+            background: #e8f4f8;
+            color: var(--accent-blue);
+            border: 1px solid #b8dce8;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            padding: 0.15rem 0.5rem;
+            margin-top: 0.4rem;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: linear-gradient(135deg, #1e2d3d, #2c3e50);
+            color: white;
+            padding: 2.5rem 0 1.5rem;
         }
         .footer-container {
             display: flex;
             flex-wrap: wrap;
+            gap: 2rem;
             justify-content: space-between;
         }
-        .footer-section {
-            flex: 1;
-            min-width: 200px;
-            margin-bottom: 1rem;
-        }
+        .footer-section { flex: 1; min-width: 180px; }
         .footer-title {
-            font-size: 1.2rem;
-            margin-top: 0;
-            margin-bottom: 1rem;
+            font-size: 1.05rem;
+            margin: 0 0 1rem;
             color: var(--accent-yellow);
+            display: flex; align-items: center; gap: 0.4rem;
         }
-        .contact-info {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+        .contact-info { list-style: none; padding: 0; margin: 0; }
         .contact-item {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.7rem;
             display: flex;
             align-items: center;
+            gap: 0.6rem;
+            font-size: 0.92rem;
+            color: rgba(255,255,255,0.85);
         }
-        .contact-icon {
-            margin-right: 0.5rem;
-            color: var(--accent-green);
+        .contact-icon { color: var(--accent-green); width: 16px; text-align: center; }
+        .qr-box {
+            width: 110px; height: 110px;
+            background: white;
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            color: #aaa; font-size: 0.78rem; text-align: center;
+            padding: 8px;
+            margin-top: 0.5rem;
         }
-        .qr-placeholder {
-            width: 120px;
-            height: 120px;
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--text-secondary);
+        .footer-divider {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin: 1.5rem 0 1rem;
         }
         .disclaimer {
-            font-size: 16pt;
-            color: var(--text-secondary);
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.4);
             text-align: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
         }
+
         @media (max-width: 768px) {
-            .navbar-container {
-                flex-direction: column;
-            }
-            .nav-menu {
-                margin-top: 1rem;
-                flex-direction: column;
-                width: 100%;
-            }
-            .nav-item {
-                margin-left: 0;
-                margin-bottom: 0.5rem;
-            }
-            .dropdown-menu {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                box-shadow: none;
-                background-color: transparent;
-                padding: 0;
-            }
-            .dropdown-item {
-                color: white;
-                padding-left: 2rem;
-            }
-            .main-visual {
-                height: 300px;
-            }
-            .footer-container {
-                flex-direction: column;
-            }
+            .navbar-container { flex-direction: column; gap: 0.8rem; }
+            .nav-menu { flex-wrap: wrap; justify-content: center; }
+            .nav-item { margin: 0.2rem; }
+            .dropdown-menu { position: static; opacity: 1; visibility: visible; box-shadow: none; background: transparent; }
+            .dropdown-item { color: rgba(255,255,255,0.7); padding-left: 1.5rem; }
+            .hero { height: 280px; }
+            .hero-title { font-size: 1.5rem; }
+            .footer-container { flex-direction: column; }
+            .card { padding: 1.2rem; }
         }
     </style>
 </head>
 <body>
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar">
         <div class="container navbar-container">
-            <div class="nav-logo">学术主页</div>
+            <div class="nav-logo"><i class="fas fa-graduation-cap" style="margin-right:8px;color:#ffc107;"></i>学术主页</div>
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">我的模型</a>
+                    <a href="#" class="nav-link"><i class="fas fa-cube" style="margin-right:5px;"></i>我的模型</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" class="dropdown-item">近场动力学盾构管片分析模型</a></li>
-                        <li><a href="#" class="dropdown-item">近场动力学-有限元耦合锚杆锚固模型</a></li>
+                        <li><a href="#" class="dropdown-item"><i class="fas fa-circle-dot" style="margin-right:6px;color:#17a2b8;"></i>近场动力学盾构管片分析模型</a></li>
+                        <li><a href="#" class="dropdown-item"><i class="fas fa-circle-dot" style="margin-right:6px;color:#17a2b8;"></i>近场动力学-有限元耦合锚杆锚固模型</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">我的算法</a>
+                    <a href="#" class="nav-link"><i class="fas fa-code" style="margin-right:5px;"></i>我的算法</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" class="dropdown-item">算法1</a></li>
-                        <li><a href="#" class="dropdown-item">算法2</a></li>
+                        <li><a href="#" class="dropdown-item"><i class="fas fa-circle-dot" style="margin-right:6px;color:#17a2b8;"></i>算法1</a></li>
+                        <li><a href="#" class="dropdown-item"><i class="fas fa-circle-dot" style="margin-right:6px;color:#17a2b8;"></i>算法2</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">兴趣爱好</a>
+                    <a href="#" class="nav-link"><i class="fas fa-heart" style="margin-right:5px;"></i>兴趣爱好</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" class="dropdown-item">羽毛球赛事视频</a></li>
-                        <li><a href="#" class="dropdown-item">音乐推荐列表</a></li>
-                        <li><a href="#" class="dropdown-item">哲学书籍与观点</a></li>
+                        <li><a href="#" class="dropdown-item"><i class="fas fa-circle-dot" style="margin-right:6px;color:#17a2b8;"></i>羽毛球赛事视频</a></li>
+                        <li><a href="#" class="dropdown-item"><i class="fas fa-circle-dot" style="margin-right:6px;color:#17a2b8;"></i>音乐推荐列表</a></li>
+                        <li><a href="#" class="dropdown-item"><i class="fas fa-circle-dot" style="margin-right:6px;color:#17a2b8;"></i>哲学书籍与观点</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">我的论文</a>
+                    <a href="#" class="nav-link"><i class="fas fa-file-alt" style="margin-right:5px;"></i>我的论文</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" class="dropdown-item">论文列表</a></li>
-                        <li><a href="#" class="dropdown-item">发表记录</a></li>
+                        <li><a href="#" class="dropdown-item"><i class="fas fa-circle-dot" style="margin-right:6px;color:#17a2b8;"></i>论文列表</a></li>
+                        <li><a href="#" class="dropdown-item"><i class="fas fa-circle-dot" style="margin-right:6px;color:#17a2b8;"></i>发表记录</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <div class="container">
-        <div class="main-visual">
-            <div class="main-visual-placeholder">用户上传的山水风景图将显示在这里</div>
+    <!-- ===== HERO ===== -->
+    <div class="hero">
+        <!-- 山峦 SVG 剪影 -->
+        <svg class="hero-mountains" viewBox="0 0 1440 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,300 L0,200 L120,130 L240,180 L360,80 L480,150 L600,60 L720,120 L840,50 L960,110 L1080,70 L1200,130 L1320,90 L1440,140 L1440,300 Z" fill="rgba(255,255,255,0.04)"/>
+            <path d="M0,300 L0,240 L180,170 L300,210 L420,140 L540,190 L660,110 L780,160 L900,100 L1020,155 L1140,120 L1260,170 L1380,140 L1440,160 L1440,300 Z" fill="rgba(255,255,255,0.06)"/>
+            <path d="M0,300 L0,270 L200,220 L360,250 L500,200 L640,240 L780,190 L920,230 L1060,195 L1200,225 L1340,205 L1440,220 L1440,300 Z" fill="rgba(255,255,255,0.05)"/>
+            <!-- 远山薄雾 -->
+            <ellipse cx="720" cy="280" rx="900" ry="40" fill="rgba(255,255,255,0.03)"/>
+        </svg>
+        <div class="hero-content">
+            <div class="hero-title">个人学术主页</div>
+            <div class="hero-subtitle">岩土工程 · 近场动力学 · 隧道工程</div>
+            <div class="hero-upload-hint"><i class="fas fa-image" style="margin-right:5px;"></i>可替换为您的山水风景图片</div>
         </div>
+    </div>
 
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="container">
         <div class="card">
-            <h2 class="card-title">论文发表</h2>
+            <h2 class="card-title"><i class="fas fa-newspaper"></i>论文发表</h2>
             <ul class="paper-list">
                 <li class="paper-item">
-                    <div class="paper-title">基于近场动力学的盾构管片损伤分析</div>
-                    <div class="paper-meta">发表于《工程力学》2025年3月</div>
-                </li>
-                <li class="paper-item">
-                    <div class="paper-title">近场动力学-有限元耦合方法在锚固工程中的应用</div>
-                    <div class="paper-meta">发表于《岩土工程学报》2024年9月</div>
-                </li>
-                <li class="paper-item">
-                    <div class="paper-title">盾构隧道管片接缝力学性能研究</div>
-                    <div class="paper-meta">发表于《隧道建设》2023年12月</div>
-                </li>
-                <li class="paper-item">
-                    <div class="paper-title">基于机器学习的岩土参数反演方法</div>
-                    <div class="paper-meta">发表于《岩土力学》2022年6月</div>
+                    <div class="paper-index">1</div>
+                    <div class="paper-body">
+                        <div class="paper-title">
+                            Peridynamics model and application for shield tunnel segments coupling beam-spring and Winkler foundation models
+                        </div>
+                        <div class="paper-meta">
+                            <span class="journal"><i class="fas fa-journal-whills" style="margin-right:4px;"></i>Tunnelling and Underground Space Technology</span><br>
+                            <span><i class="fas fa-calendar-alt" style="margin-right:4px;"></i>June 2026</span>
+                            <span><i class="fas fa-book-open" style="margin-right:4px;"></i>Volume 172</span>
+                            <span><i class="fas fa-hashtag" style="margin-right:4px;"></i>Article 107562</span>
+                        </div>
+                        <span class="paper-badge"><i class="fas fa-check-circle" style="margin-right:3px;"></i>已发表 · SCI</span>
+                    </div>
                 </li>
             </ul>
         </div>
     </div>
 
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
-        <div class="container footer-container">
-            <div class="footer-section">
-                <h3 class="footer-title">联系方式</h3>
-                <ul class="contact-info">
-                    <li class="contact-item">
-                        <i class="fas fa-phone-alt contact-icon"></i>
-                        <span>手机: 138-XXXX-XXXX</span>
-                    </li>
-                    <li class="contact-item">
-                        <i class="fab fa-qq contact-icon"></i>
-                        <span>QQ: 123456789</span>
-                    </li>
-                </ul>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h3 class="footer-title"><i class="fas fa-address-book"></i>联系方式</h3>
+                    <ul class="contact-info">
+                        <li class="contact-item">
+                            <i class="fas fa-phone-alt contact-icon"></i>
+                            <span>159-5424-5941</span>
+                        </li>
+                        <li class="contact-item">
+                            <i class="fab fa-qq contact-icon"></i>
+                            <span>2958297469</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title"><i class="fas fa-envelope"></i>电子邮箱</h3>
+                    <ul class="contact-info">
+                        <li class="contact-item">
+                            <i class="fas fa-university contact-icon"></i>
+                            <span>bfl@mail.sdu.edu.cn</span>
+                        </li>
+                        <li class="contact-item">
+                            <i class="fas fa-envelope contact-icon"></i>
+                            <span>2958297469@qq.com</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title"><i class="fab fa-weixin"></i>微信</h3>
+                    <ul class="contact-info">
+                        <li class="contact-item">
+                            <i class="fab fa-weixin contact-icon"></i>
+                            <span>BU__FL</span>
+                        </li>
+                        <li class="contact-item">
+                            <div class="qr-box">
+                                <div><i class="fas fa-qrcode" style="font-size:2rem;color:#ccc;display:block;margin-bottom:4px;"></i>微信二维码<br>上传后替换</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3 class="footer-title">电子邮箱</h3>
-                <ul class="contact-info">
-                    <li class="contact-item">
-                        <i class="fas fa-envelope contact-icon"></i>
-                        <span>学术邮箱: academic@edu</span>
-                    </li>
-                    <li class="contact-item">
-                        <i class="fas fa-envelope contact-icon"></i>
-                        <span>私人邮箱: 123@qq.com</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3 class="footer-title">微信</h3>
-                <ul class="contact-info">
-                    <li class="contact-item">
-                        <i class="fab fa-weixin contact-icon"></i>
-                        <span>微信号: weixin123</span>
-                    </li>
-                    <li class="contact-item">
-                        <div class="qr-placeholder">微信二维码占位</div>
-                    </li>
-                </ul>
-            </div>
+            <hr class="footer-divider">
+            <div class="disclaimer">© 2026 个人学术主页 · 山东大学</div>
         </div>
-        <div class="disclaimer">Feel free to reach out and share your thoughts.</div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                document.body.classList.add('loaded');
-            }, 100);
-            
-            // 下拉菜单的移动端适配
-            const navItems = document.querySelectorAll('.nav-item');
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(() => document.body.classList.add('loaded'), 100);
+            // 移动端下拉菜单点击展开
             if (window.innerWidth <= 768) {
-                navItems.forEach(item => {
-                    const link = item.querySelector('.nav-link');
-                    link.addEventListener('click', function(e) {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.querySelector('.nav-link').addEventListener('click', function (e) {
                         e.preventDefault();
                         const menu = item.querySelector('.dropdown-menu');
-                        if (menu.style.display === 'block') {
-                            menu.style.display = 'none';
-                        } else {
-                            menu.style.display = 'block';
-                        }
+                        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
                     });
                 });
             }
