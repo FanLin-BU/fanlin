@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学术个人主页</title>
+    <link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-100-M/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://s2.ssl.qhres2.com/static/56662140ef7d5d03.css">
+    <style>
+        :root {
+            --primary-dark: #333333;
+            --primary-light: #f8f9fa;
+            --accent-yellow: #ffc107;
+            --accent-green: #28a745;
+            --accent-blue: #17a2b8;
+            --accent-orange: #fd7e14;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-light);
+            color: var(--text-primary);
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+        body.loaded {
+            opacity: 1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        .navbar {
+            background-color: var(--primary-dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-item {
+            position: relative;
+            margin-left: 1.5rem;
+        }
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1001;
+        }
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+        .dropdown-item {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .dropdown-item:hover {
+            background-color: var(--primary-light);
+        }
+        .main-visual {
+            height: 400px;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .main-visual-placeholder {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-blue);
+            color: var(--text-primary);
+        }
+        .paper-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .paper-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        .paper-item:last-child {
+            border-bottom: none;
+        }
+        .paper-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .paper-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 2rem 0;
+        }
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1rem;
+        }
+        .footer-title {
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--accent-yellow);
+        }
+        .contact-info {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .contact-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        .contact-icon {
+            margin-right: 0.5rem;
+            color: var(--accent-green);
+        }
+        .qr-placeholder {
+            width: 120px;
+            height: 120px;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-secondary);
+        }
+        .disclaimer {
+            font-size: 16pt;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+            }
+            .nav-menu {
+                margin-top: 1rem;
+                flex-direction: column;
+                width: 100%;
+            }
+            .nav-item {
+                margin-left: 0;
+                margin-bottom: 0.5rem;
+            }
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                box-shadow: none;
+                background-color: transparent;
+                padding: 0;
+            }
+            .dropdown-item {
+                color: white;
+                padding-left: 2rem;
+            }
+            .main-visual {
+                height: 300px;
+            }
+            .footer-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <div class="nav-logo">学术主页</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">我的模型</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="dropdown-item">近场动力学盾构管片分析模型</a></li>
+                        <li><a href="#" class="dropdown-item">近场动力学-有限元耦合锚杆锚固模型</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">我的算法</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="dropdown-item">算法1</a></li>
+                        <li><a href="#" class="dropdown-item">算法2</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">兴趣爱好</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="dropdown-item">羽毛球赛事视频</a></li>
+                        <li><a href="#" class="dropdown-item">音乐推荐列表</a></li>
+                        <li><a href="#" class="dropdown-item">哲学书籍与观点</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">我的论文</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="dropdown-item">论文列表</a></li>
+                        <li><a href="#" class="dropdown-item">发表记录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="main-visual">
+            <div class="main-visual-placeholder">用户上传的山水风景图将显示在这里</div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">论文发表</h2>
+            <ul class="paper-list">
+                <li class="paper-item">
+                    <div class="paper-title">基于近场动力学的盾构管片损伤分析</div>
+                    <div class="paper-meta">发表于《工程力学》2025年3月</div>
+                </li>
+                <li class="paper-item">
+                    <div class="paper-title">近场动力学-有限元耦合方法在锚固工程中的应用</div>
+                    <div class="paper-meta">发表于《岩土工程学报》2024年9月</div>
+                </li>
+                <li class="paper-item">
+                    <div class="paper-title">盾构隧道管片接缝力学性能研究</div>
+                    <div class="paper-meta">发表于《隧道建设》2023年12月</div>
+                </li>
+                <li class="paper-item">
+                    <div class="paper-title">基于机器学习的岩土参数反演方法</div>
+                    <div class="paper-meta">发表于《岩土力学》2022年6月</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3 class="footer-title">联系方式</h3>
+                <ul class="contact-info">
+                    <li class="contact-item">
+                        <i class="fas fa-phone-alt contact-icon"></i>
+                        <span>手机: 138-XXXX-XXXX</span>
+                    </li>
+                    <li class="contact-item">
+                        <i class="fab fa-qq contact-icon"></i>
+                        <span>QQ: 123456789</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">电子邮箱</h3>
+                <ul class="contact-info">
+                    <li class="contact-item">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <span>学术邮箱: academic@edu</span>
+                    </li>
+                    <li class="contact-item">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <span>私人邮箱: 123@qq.com</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">微信</h3>
+                <ul class="contact-info">
+                    <li class="contact-item">
+                        <i class="fab fa-weixin contact-icon"></i>
+                        <span>微信号: weixin123</span>
+                    </li>
+                    <li class="contact-item">
+                        <div class="qr-placeholder">微信二维码占位</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="disclaimer">以上内容由AI搜集并生成，仅供参考</div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.body.classList.add('loaded');
+            }, 100);
+            
+            // 下拉菜单的移动端适配
+            const navItems = document.querySelectorAll('.nav-item');
+            if (window.innerWidth <= 768) {
+                navItems.forEach(item => {
+                    const link = item.querySelector('.nav-link');
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const menu = item.querySelector('.dropdown-menu');
+                        if (menu.style.display === 'block') {
+                            menu.style.display = 'none';
+                        } else {
+                            menu.style.display = 'block';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+<!-- 以上内容由AI搜集并生成，仅供参考 -->
