@@ -12,15 +12,13 @@
             --accent-yellow: #ffc107;
             --accent-green: #28a745;
             --accent-blue: #17a2b8;
-            --accent-orange: #fd7e14;
             --text-primary: #212529;
             --text-secondary: #6c757d;
         }
         * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             background-color: var(--primary-light);
             color: var(--text-primary);
             transition: opacity 0.6s ease;
@@ -28,6 +26,7 @@
         }
         body.loaded { opacity: 1; }
 
+        /* ===== NAVBAR ===== */
         .navbar {
             background-color: var(--primary-dark);
             padding: 1rem 0;
@@ -75,40 +74,46 @@
         }
         .dropdown-item:hover { background-color: #f0f4f8; color: var(--accent-blue); }
 
-        /* ===== HERO ===== */
+        /* ===== HERO VIDEO ===== */
         .hero {
+            position: relative;
             width: 100%;
             height: 420px;
-            /* ============================================================
-               【图片替换区域】
-               将下方 background 改为：
-               background: url('your-image.jpg') center/cover no-repeat;
-               并把图片文件上传到 GitHub 仓库同目录下即可
-               ============================================================ */
-            background: linear-gradient(135deg, #1a2a3a 0%, #2c4a6e 40%, #3a6186 70%, #89a4c7 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
             overflow: hidden;
             margin-bottom: 2rem;
+            background-color: #1a2a3a; /* 视频加载前的兜底背景色 */
         }
-        .hero::before {
-            content: '';
+        /* 视频铺满容器 */
+        .hero-video {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+            z-index: 0;
+        }
+        /* 半透明遮罩，让文字更清晰 */
+        .hero-overlay {
             position: absolute;
             inset: 0;
-            background:
-                radial-gradient(ellipse 60% 40% at 20% 60%, rgba(255,255,255,0.07) 0%, transparent 60%),
-                radial-gradient(ellipse 40% 60% at 80% 30%, rgba(135,206,235,0.1) 0%, transparent 60%);
-        }
-        .hero-mountains {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            width: 100%; height: 70%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0,0,0,0.25) 0%,
+                rgba(0,0,0,0.45) 100%
+            );
+            z-index: 1;
         }
         .hero-content {
             position: relative;
             z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
             color: white;
         }
@@ -116,13 +121,13 @@
             font-size: 2.2rem;
             font-weight: 700;
             margin: 0 0 0.5rem;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
             letter-spacing: 2px;
         }
         .hero-subtitle {
             font-size: 1.05rem;
-            color: rgba(255,255,255,0.8);
-            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+            color: rgba(255,255,255,0.85);
+            text-shadow: 0 1px 6px rgba(0,0,0,0.5);
             letter-spacing: 1px;
         }
 
@@ -144,7 +149,7 @@
             align-items: center;
             gap: 0.5rem;
         }
-        .card-title i { color: var(--accent-blue); font-size: 1.1rem; }
+        .card-title i { color: var(--accent-blue); }
 
         /* ===== PAPER LIST ===== */
         .paper-list { list-style: none; padding: 0; margin: 0; }
@@ -162,10 +167,8 @@
             width: 28px; height: 28px;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-            flex-shrink: 0;
-            margin-top: 2px;
+            font-size: 0.8rem; font-weight: bold;
+            flex-shrink: 0; margin-top: 2px;
         }
         .paper-body { flex: 1; }
         .paper-title {
@@ -175,8 +178,7 @@
             line-height: 1.5;
             color: #1a1a2e;
         }
-        .paper-meta { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6; }
-        .paper-meta span { margin-right: 1rem; }
+        .paper-meta { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.8; }
         .paper-meta .journal { color: var(--accent-blue); font-weight: 500; }
         .paper-badge {
             display: inline-block;
@@ -224,8 +226,7 @@
             border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
             color: #aaa; font-size: 0.78rem; text-align: center;
-            padding: 8px;
-            margin-top: 0.5rem;
+            padding: 8px; margin-top: 0.5rem;
         }
         .footer-divider {
             border: none;
@@ -244,7 +245,7 @@
             .nav-item { margin: 0.2rem; }
             .dropdown-menu { position: static; opacity: 1; visibility: visible; box-shadow: none; background: transparent; }
             .dropdown-item { color: rgba(255,255,255,0.7); padding-left: 1.5rem; }
-            .hero { height: 280px; }
+            .hero { height: 260px; }
             .hero-title { font-size: 1.5rem; }
             .footer-container { flex-direction: column; }
             .card { padding: 1.2rem; }
@@ -252,6 +253,8 @@
     </style>
 </head>
 <body>
+
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar">
         <div class="container navbar-container">
             <div class="nav-logo"><i class="fas fa-graduation-cap" style="margin-right:8px;color:#ffc107;"></i>学术主页</div>
@@ -289,19 +292,32 @@
         </div>
     </nav>
 
-    <!-- Hero Banner -->
+    <!-- ===== HERO VIDEO BANNER ===== -->
     <div class="hero">
-        <svg class="hero-mountains" viewBox="0 0 1440 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,300 L0,200 L120,130 L240,180 L360,80 L480,150 L600,60 L720,120 L840,50 L960,110 L1080,70 L1200,130 L1320,90 L1440,140 L1440,300 Z" fill="rgba(255,255,255,0.04)"/>
-            <path d="M0,300 L0,240 L180,170 L300,210 L420,140 L540,190 L660,110 L780,160 L900,100 L1020,155 L1140,120 L1260,170 L1380,140 L1440,160 L1440,300 Z" fill="rgba(255,255,255,0.06)"/>
-            <path d="M0,300 L0,270 L200,220 L360,250 L500,200 L640,240 L780,190 L920,230 L1060,195 L1200,225 L1340,205 L1440,220 L1440,300 Z" fill="rgba(255,255,255,0.05)"/>
-        </svg>
+        <!--
+            【视频替换说明】
+            1. 将你的视频文件（如 banner.mp4）上传到 GitHub 仓库根目录
+            2. 把下方 src="banner.mp4" 改为你的视频文件名即可
+            3. autoplay=自动播放 loop=循环 muted=静音（浏览器要求静音才能自动播放）
+            4. playsinline 用于 iOS 设备内联播放
+        -->
+        <video
+            class="hero-video"
+            src="banner.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="auto"
+        ></video>
+        <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-title">个人学术主页</div>
             <div class="hero-subtitle">岩土工程 · 近场动力学 · 隧道工程</div>
         </div>
     </div>
 
+    <!-- ===== MAIN CONTENT ===== -->
     <div class="container">
         <div class="card">
             <h2 class="card-title"><i class="fas fa-newspaper"></i>论文发表</h2>
@@ -325,6 +341,7 @@
         </div>
     </div>
 
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-container">
@@ -362,8 +379,8 @@
                             <span>BU__FL</span>
                         </li>
                         <li class="contact-item">
+                            <!-- 上传二维码图片后替换为：<img src="qrcode.jpg" width="100" height="100" style="border-radius:6px;"> -->
                             <div class="qr-box">
-                                <!-- 将二维码图片上传后替换为 <img src="qrcode.jpg" width="100" height="100"> -->
                                 <div><i class="fas fa-qrcode" style="font-size:2rem;color:#ccc;display:block;margin-bottom:4px;"></i>微信二维码<br>上传后替换</div>
                             </div>
                         </li>
